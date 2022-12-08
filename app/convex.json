@@ -3,5 +3,10 @@
   "team": "convex",
   "prodUrl": "https://optimistic-quail-882.convex.cloud",
   "functions": "convex/",
-  "authInfo": []
+  "authInfo": [
+    {
+      "domain": "https://dev-pz-qwrna.us.auth0.com/",
+      "applicationID": "EVNgFIdlPO4EGuzxxQnXCCPTtRuoVl2P"
+    }
+  ]
 }
