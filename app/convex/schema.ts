@@ -26,11 +26,8 @@ export default defineSchema({
   cards_due: defineTable({
     card: s.id("cards"),
     user: s.id("users"),
-    due: s.number()
-  }).index('by_user_card', ['user', 'card']),
-  history: defineTable({
-    user: s.id("users"),
-    card: s.id("cards"),
-    difficulty: s.string(),
-  })
+    ease: s.number(),
+    due: s.number(),
+    interval: s.number(),
+  }).index('by_user_card', ['user', 'card'])
 })
