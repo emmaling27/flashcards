@@ -11,6 +11,7 @@
 
 import type { ApiFromModules } from "convex/api";
 import type * as addCard from "../addCard";
+import type * as addCardToDeck from "../addCardToDeck";
 import type * as addDeck from "../addDeck";
 import type * as getDeck from "../getDeck";
 import type * as listDecks from "../listDecks";
@@ -30,6 +31,7 @@ import type * as storeUser from "../storeUser";
  */
 export type API = ApiFromModules<{
   addCard: typeof addCard;
+  addCardToDeck: typeof addCardToDeck;
   addDeck: typeof addDeck;
   getDeck: typeof getDeck;
   listDecks: typeof listDecks;
