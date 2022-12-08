@@ -16,11 +16,6 @@ const COLORS = [
 
 const Card = ({ deckId }: { deckId: Id<'decks'> }) => {
   const card = useQuery('showNextCard', deckId)
-  const [front, setFront] = useState(true)
-
-  const flip = () => {
-    setFront(!front)
-  }
 
   if (card === undefined) {
     return <div>'Loading card...'</div>
@@ -29,12 +24,6 @@ const Card = ({ deckId }: { deckId: Id<'decks'> }) => {
     return <div>'No cards'</div>
   }
   return <FlashCard card={card} />
-  // return (
-  //   <div className={"card"}>
-  //     <p className={"cardText"}>{front ? card.front : card.back}</p>
-  //     <button onClick={flip}>flip</button>
-  //   </div>
-  // );
 }
 
 const AddCard = ({ deckId }: { deckId: Id<'decks'> }) => {

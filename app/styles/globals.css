@@ -25,7 +25,15 @@ main {
   align-items: center;
   justify-content: center;
   font-size: 2em;
+  position: relative;
+
 }
+.card .flip {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 
 h1 {
   text-align: center;
