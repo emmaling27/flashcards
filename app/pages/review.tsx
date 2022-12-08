@@ -1,8 +1,31 @@
 import { FormEvent, useState } from 'react'
-import { Id } from '../convex/_generated/dataModel'
+import { Id, Document } from '../convex/_generated/dataModel'
 import { useMutation, useQuery } from '../convex/_generated/react'
 import { useRouter } from 'next/router'
 import FlashCard from '../components/FlashCard'
+
+const AddToDeck = ({card, close}: {card: Document<'cards'>, close: () => void}) => {
+  const addCardToDeck = useMutation('addCardToDeck');
+  const decks = useQuery('listDecks') || [];
+
+  const handleClickDeck = async (deckId: Id<'decks'>) => {
+    await addCardToDeck(card._id, deckId);
+    close();
+  };
+
+  return <div style={{border: "1px solid black"}}>
+    <p>add card to deck</p>
+    <ul>
+      {decks.map((deck) => (
+        <li key={deck._id.toString()} onClick={() => handleClickDeck(deck._id)}>
+          <span>{deck.name}</span>
+          <span>{deck.description}</span>
+        </li>
+      ))}
+    </ul>
+    <button onClick={close}>close</button>
+  </div>;
+};
 
 // from https://www.schemecolor.com/american-pastels.php
 const COLORS = [
@@ -14,8 +37,18 @@ const COLORS = [
   '#F7DDCD',
 ]
 
-const Card = ({ deckId }: { deckId: Id<'decks'> }) => {
-  const card = useQuery('showNextCard', deckId)
+
+const Card = ({deckId}: {deckId: Id<"decks">}) => {
+  const card = useQuery('showNextCard', deckId);
+  const [addToDeckModal, setAddToDeckModal] = useState(false);
+  
+  const addToDeck = () => {
+    setAddToDeckModal(true);
+  };
+
+  if (addToDeckModal) {
+    return <AddToDeck card={card!} close={() => setAddToDeckModal(false)} />;
+  }
 
   if (card === undefined) {
     return <div>'Loading card...'</div>
