@@ -8,29 +8,30 @@ export default defineSchema({
   users: defineTable({
     name: s.string(),
     tokenIdentifier: s.string(),
-  }).index("by_token", ["tokenIdentifier"]),
+  }).index('by_token', ['tokenIdentifier']),
   decks: defineTable({
     name: s.string(),
     description: s.string(),
-    creator: s.id("users")
+    creator: s.id('users'),
   }),
   cards: defineTable({
     front: s.string(),
     back: s.string(),
-    creator: s.id("users")
+    color: s.string(),
+    creator: s.id('users'),
   }),
   card_decks: defineTable({
-    deck: s.id("decks"),
-    card: s.id("cards"),
+    deck: s.id('decks'),
+    card: s.id('cards'),
   }).index('by_deck', ['deck', 'card']),
   cards_due: defineTable({
-    card: s.id("cards"),
-    user: s.id("users"),
-    due: s.number()
+    card: s.id('cards'),
+    user: s.id('users'),
+    due: s.number(),
   }).index('by_user_card', ['user', 'card']),
   history: defineTable({
-    user: s.id("users"),
-    card: s.id("cards"),
+    user: s.id('users'),
+    card: s.id('cards'),
     difficulty: s.string(),
-  })
+  }),
 })

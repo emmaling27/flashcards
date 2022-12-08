@@ -1,30 +1,43 @@
-import { FormEvent, useEffect, useState } from 'react'
+import { FormEvent, useState } from 'react'
 import { Id } from '../convex/_generated/dataModel'
 import { useMutation, useQuery } from '../convex/_generated/react'
 import { useRouter } from 'next/router'
 import FlashCard from '../components/FlashCard'
 
+// from https://www.schemecolor.com/american-pastels.php
+const COLORS = [
+  '#D1F0A4',
+  '#BAB8F3',
+  '#F2C1F3',
+  '#C6E8EE',
+  '#FCF7E7',
+  '#F7DDCD',
+]
+
 const Card = ({ deckId }: { deckId: Id<'decks'> }) => {
   const card = useQuery('showNextCard', deckId)
 
   if (card === undefined) {
-    return <FlashCard text={'Loading card...'} />
+    return <div>'Loading card...'</div>
   }
   if (!card) {
     return <div>'No cards'</div>
   }
-  return <FlashCard text={card.front} />
+  return <FlashCard card={card} />
 }
 
 const AddCard = ({ deckId }: { deckId: Id<'decks'> }) => {
   const addCard = useMutation('addCard')
+
+  const [colorIndex] = useState(Math.floor(Math.random() * COLORS.length))
+  const color = COLORS[colorIndex]
 
   const [newCardFront, setNewCardFront] = useState('')
   const [newCardBack, setNewCardBack] = useState('')
 
   const handleAddCard = async (e: FormEvent) => {
     e.preventDefault()
-    await addCard(deckId, newCardFront, newCardBack)
+    await addCard(deckId, newCardFront, newCardBack, color)
     setNewCardFront('')
     setNewCardBack('')
   }

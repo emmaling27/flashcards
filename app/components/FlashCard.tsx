@@ -1,21 +1,9 @@
-import { useState } from 'react'
+import { Document } from '../convex/_generated/dataModel'
 
-// from https://www.schemecolor.com/american-pastels.php
-const COLORS = [
-  '#D1F0A4',
-  '#BAB8F3',
-  '#F2C1F3',
-  '#C6E8EE',
-  '#FCF7E7',
-  '#F7DDCD',
-]
-
-export default function ({ text }: { text: string }) {
-  const [colorIndex] = useState(Math.floor(Math.random() * COLORS.length))
-  const color = COLORS[colorIndex]
+export default function ({ card }: { card: Document<'cards'> }) {
   return (
-    <div className={'card'} style={{ backgroundColor: color }}>
-      {text}
+    <div className={'card'} style={{ backgroundColor: card.color }}>
+      {card.front}
     </div>
   )
 }
