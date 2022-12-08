@@ -8,10 +8,10 @@ export default function ({ card }: { card: Document<'cards'> }) {
     setFront(!front)
   }
   return (
-    <div className={'card'} style={{ backgroundColor: card.color }}>
-      {front ? card.front : card.back}
-      <div onClick={flip} className={'flip'}>
-        <Image src="/flip.svg" height={50} width={50} alt="fip" />
+    <div className="card" onClick={flip}>
+      <div className="card-inner" style={{ backgroundColor: card.color }}>
+        <div className="card-front">{card.front}</div>
+        <div className="card-back">{card.back}</div>
       </div>
     </div>
   )
