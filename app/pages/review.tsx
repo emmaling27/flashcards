@@ -20,7 +20,7 @@ const Card = ({deckId}: {deckId: Id<"decks">}) => {
   }
   return (
     <div className={"card"}>
-      {front ? card.front : card.back}
+      <p className={"cardText"}>{front ? card.front : card.back}</p>
       <button onClick={flip}>flip</button>
     </div>
   );
