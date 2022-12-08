@@ -22,12 +22,12 @@ export default defineSchema({
   card_decks: defineTable({
     deck: s.id("decks"),
     card: s.id("cards"),
-  }),
+  }).index('by_deck', ['deck', 'card']),
   cards_due: defineTable({
     card: s.id("cards"),
     user: s.id("users"),
     due: s.number()
-  }),
+  }).index('by_user_card', ['user', 'card']),
   history: defineTable({
     user: s.id("users"),
     card: s.id("cards"),
