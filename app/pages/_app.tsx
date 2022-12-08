@@ -33,7 +33,7 @@ export function Login() {
   }
   return (
     <main className="py-4">
-      <h1 className="text-center">Convex Chat</h1>
+      <h1 className="text-center">Flashcards</h1>
       <div className="text-center">
         <span>
           <button className="btn btn-primary" onClick={loginWithRedirect}>

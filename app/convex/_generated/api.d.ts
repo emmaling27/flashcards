@@ -10,8 +10,11 @@
  */
 
 import type { ApiFromModules } from "convex/api";
+import type * as addDeck from "../addDeck";
+import type * as listDecks from "../listDecks";
 import type * as listMessages from "../listMessages";
 import type * as sendMessage from "../sendMessage";
+import type * as storeUser from "../storeUser";
 
 /**
  * A type describing your app's public Convex API.
@@ -23,6 +26,9 @@ import type * as sendMessage from "../sendMessage";
  * `ConvexReactClient` to create app-specific types.
  */
 export type API = ApiFromModules<{
+  addDeck: typeof addDeck;
+  listDecks: typeof listDecks;
   listMessages: typeof listMessages;
   sendMessage: typeof sendMessage;
+  storeUser: typeof storeUser;
 }>;
