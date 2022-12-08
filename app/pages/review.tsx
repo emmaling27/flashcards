@@ -3,6 +3,7 @@ import { Id, Document } from '../convex/_generated/dataModel'
 import { useMutation, useQuery } from '../convex/_generated/react'
 import { useRouter } from 'next/router'
 import FlashCard from '../components/FlashCard'
+import { Button, Popover } from '@mui/material'
 
 const AddToDeck = ({card, close}: {card: Document<'cards'>, close: () => void}) => {
   const addCardToDeck = useMutation('addCardToDeck');
@@ -13,8 +14,7 @@ const AddToDeck = ({card, close}: {card: Document<'cards'>, close: () => void}) 
     close();
   };
 
-  return <div style={{border: "1px solid black"}}>
-    <p>add card to deck</p>
+  return <div>
     <ul>
       {decks.map((deck) => (
         <li key={deck._id.toString()} onClick={() => handleClickDeck(deck._id)}>
@@ -23,7 +23,6 @@ const AddToDeck = ({card, close}: {card: Document<'cards'>, close: () => void}) 
         </li>
       ))}
     </ul>
-    <button onClick={close}>close</button>
   </div>;
 };
 
@@ -39,34 +38,30 @@ const COLORS = [
 
 const Card = ({deckId}: {deckId: Id<"decks">}) => {
   const card = useQuery('showNextCard', deckId);
-  const [front, setFront] = useState(true);
-  const [addToDeckModal, setAddToDeckModal] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   
-  const addToDeck = () => {
-    setAddToDeckModal(true);
-  };
-
-  const flip = () => {
-    setFront(!front)
-  }
-
-  if (addToDeckModal) {
-    return <AddToDeck card={card!} close={() => setAddToDeckModal(false)} />;
-  }
-
   if (card === undefined) {
     return <div>'Loading card...'</div>
   }
   if (!card) {
     return <div>'No cards'</div>
   }
-  return <FlashCard card={card} />
-  // return (
-  //   <div className={"card"}>
-  //     <p className={"cardText"}>{front ? card.front : card.back}</p>
-  //     <button onClick={flip}>flip</button>
-  //   </div>
-  // );
+  return <div><FlashCard card={card} />
+      <Button variant="contained" onClick={(e) => {
+        setAnchorEl(e.currentTarget);
+      }}>Add to another deck</Button>
+      <Popover
+        open={!!anchorEl}
+        anchorEl={anchorEl}
+        onClose={() => setAnchorEl(null)}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        <AddToDeck card={card} close={() => setAnchorEl(null)} />
+      </Popover>
+    </div>;
 }
 
 const AddCard = ({ deckId }: { deckId: Id<'decks'> }) => {
@@ -107,7 +102,7 @@ const AddCard = ({ deckId }: { deckId: Id<'decks'> }) => {
 }
 
 const Review = ({ deckId }: { deckId: Id<'decks'> }) => {
-  const deck = useQuery('getDeck', deckId)
+  const deck = useQuery('getDeck', deckId);
 
   if (!deck) {
     return <main>Loading Deck...</main>
