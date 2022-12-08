@@ -5,14 +5,20 @@ import { useRouter } from 'next/router'
 import FlashCard from '../components/FlashCard'
 import { Button, Popover } from '@mui/material'
 
-const AddToDeck = ({card, close}: {card: Document<'cards'>, close: () => void}) => {
-  const addCardToDeck = useMutation('addCardToDeck');
-  const decks = useQuery('listDecks') || [];
+const AddToDeck = ({
+  card,
+  close,
+}: {
+  card: Document<'cards'>
+  close: () => void
+}) => {
+  const addCardToDeck = useMutation('addCardToDeck')
+  const decks = useQuery('listDecks') || []
 
   const handleClickDeck = async (deckId: Id<'decks'>) => {
-    await addCardToDeck(card._id, deckId);
-    close();
-  };
+    await addCardToDeck(card._id, deckId)
+    close()
+  }
 
   return <div>
     <ul>
@@ -46,7 +52,8 @@ const Card = ({deckId}: {deckId: Id<"decks">}) => {
   if (!card) {
     return <div>'No cards'</div>
   }
-  return <div><FlashCard card={card} />
+  return <div>
+    <FlashCard card={card} />
       <Button variant="contained" onClick={(e) => {
         setAnchorEl(e.currentTarget);
       }}>Add to another deck</Button>
@@ -103,6 +110,7 @@ const AddCard = ({ deckId }: { deckId: Id<'decks'> }) => {
 
 const Review = ({ deckId }: { deckId: Id<'decks'> }) => {
   const deck = useQuery('getDeck', deckId);
+  const deckStats = useQuery('deckStats', deckId) || null;
 
   if (!deck) {
     return <main>Loading Deck...</main>
@@ -111,6 +119,7 @@ const Review = ({ deckId }: { deckId: Id<'decks'> }) => {
     <main>
       <h1>{deck.name}</h1>
       <p>{deck.description}</p>
+      {deckStats && <p>{deckStats.numCards} cards in deck</p>}
       <AddCard deckId={deckId} />
       <Card deckId={deck._id} />
     </main>
