@@ -18,6 +18,12 @@ main {
   margin: 0 auto;
 }
 
+.card {
+  border: 1px solid black;
+  min-height: 20em;
+  text-align: center;
+}
+
 h1 {
   text-align: center;
   margin-bottom: 8px;

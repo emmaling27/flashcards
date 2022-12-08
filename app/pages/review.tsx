@@ -8,17 +8,45 @@ const Card = ({deckId}: {deckId: Id<"decks">}) => {
   const card = useQuery('showNextCard', deckId);
 
   if (card === undefined) {
-    return <div>Loading card...</div>;
+    return <div className={"card"}>Loading card...</div>;
   }
   if (!card) {
-    return <div>No cards</div>;
+    return <div className={"card"}>No cards</div>;
   }
   return (
-    <div>
+    <div className={"card"}>
       {card.front}
     </div>
   );
 }
+
+const AddCard = ({deckId}: {deckId: Id<"decks">}) => {
+  const addCard = useMutation('addCard');
+
+  const [newCardFront, setNewCardFront] = useState('');
+  const [newCardBack, setNewCardBack] = useState('');
+
+  const handleAddCard = async (e: FormEvent) => {
+    e.preventDefault();
+    await addCard(deckId, newCardFront, newCardBack);
+    setNewCardFront('');
+    setNewCardBack('');
+  };
+
+  return (<form onSubmit={handleAddCard}>
+        <input
+          value={newCardFront}
+          onChange={(event) => setNewCardFront(event.target.value)}
+          placeholder="Front"
+        />
+        <input
+          value={newCardBack}
+          onChange={(event) => setNewCardBack(event.target.value)}
+          placeholder="Back"
+        />
+        <input type="submit" value="Add card" disabled={!newCardFront || !newCardBack} />
+      </form>);
+};
 
 const Review = ({deckId}: {deckId: Id<'decks'>}) => {
   const deck = useQuery('getDeck', deckId);
@@ -30,6 +58,7 @@ const Review = ({deckId}: {deckId: Id<'decks'>}) => {
     <main>
       <h1>{deck.name}</h1>
       <p>{deck.description}</p>
+      <AddCard deckId={deckId} />
       <Card deckId={deck._id} />
     </main>
   )
