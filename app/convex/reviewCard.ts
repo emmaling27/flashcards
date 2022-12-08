@@ -4,6 +4,8 @@ import { Id } from './_generated/dataModel';
 import { Difficulty} from '../common';
 
 const DELAY_BEFORE_REVIEW = 1;
+const BASE_INTERVAL = 5;
+const BASE_EASE = 10;
 
 export default mutation(async ({ db, auth }, card: Id<"cards">, difficulty: Difficulty) => {
     const user = await getUser(db, auth);
@@ -24,5 +26,7 @@ export default mutation(async ({ db, auth }, card: Id<"cards">, difficulty: Diff
         }
         card_data.due = Date.now() + card_data.interval * 60 * 60 * 1000
         await db.patch(card_data._id, card_data)
+    } else {
+        db.insert("cards_due", {card, user: user._id, ease: 10, due: Date.now() + (60 * 60 * 24 * DELAY_BEFORE_REVIEW), interval: BASE_INTERVAL})
     }
   })
