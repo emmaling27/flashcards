@@ -6,6 +6,11 @@ import { useRouter } from 'next/router'
 
 const Card = ({deckId}: {deckId: Id<"decks">}) => {
   const card = useQuery('showNextCard', deckId);
+  const [front, setFront] = useState(true);
+
+  const flip = () => {
+    setFront(!front);
+  };
 
   if (card === undefined) {
     return <div className={"card"}>Loading card...</div>;
@@ -15,7 +20,8 @@ const Card = ({deckId}: {deckId: Id<"decks">}) => {
   }
   return (
     <div className={"card"}>
-      {card.front}
+      {front ? card.front : card.back}
+      <button onClick={flip}>flip</button>
     </div>
   );
 }
