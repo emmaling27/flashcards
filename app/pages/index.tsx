@@ -38,7 +38,7 @@ export default function App() {
   }
   return (
     <main>
-      <h1>Flashcards</h1>
+      <h1>Flashcard Decks</h1>
       <ul>
         {decks.map((deck) => (
           <li key={deck._id.toString()} onClick={() => handleClickDeck(deck._id)}>
