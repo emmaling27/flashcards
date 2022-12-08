@@ -1,10 +1,13 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { Id } from '../convex/_generated/dataModel'
 import { useMutation, useQuery } from '../convex/_generated/react'
+import { useRouter } from 'next/router'
+
 
 export default function App() {
   const [_userId, setUserId] = useState<Id<'users'> | null>(null)
   const storeUser = useMutation('storeUser')
+  const router = useRouter();
   // Call the `storeUser` mutation function to store
   // the current user in the `users` table and return the `Id` value.
   useEffect(() => {
@@ -24,6 +27,9 @@ export default function App() {
   const [newDeckDescription, setNewDeckDescription] = useState('')
   const addDeck = useMutation('addDeck')
 
+  function handleClickDeck(deckId: Id<'decks'>) {
+    router.push(`/review?deck=${deckId.toString()}`);
+  }
   async function handleAddDeck(event: FormEvent) {
     event.preventDefault()
     setNewDeckName('')
@@ -35,7 +41,7 @@ export default function App() {
       <h1>Flashcards</h1>
       <ul>
         {decks.map((deck) => (
-          <li key={deck._id.toString()}>
+          <li key={deck._id.toString()} onClick={() => handleClickDeck(deck._id)}>
             <span>{deck.name}</span>
             <span>{deck.description}</span>
             <span>{new Date(deck._creationTime).toLocaleTimeString()}</span>

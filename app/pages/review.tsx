@@ -7,8 +7,11 @@ import { useRouter } from 'next/router'
 const Card = ({deckId}: {deckId: Id<"decks">}) => {
   const card = useQuery('showNextCard', deckId);
 
+  if (card === undefined) {
+    return <div>Loading card...</div>;
+  }
   if (!card) {
-    return <div></div>;
+    return <div>No cards</div>;
   }
   return (
     <div>
@@ -21,11 +24,12 @@ const Review = ({deckId}: {deckId: Id<'decks'>}) => {
   const deck = useQuery('getDeck', deckId);
 
   if (!deck) {
-    return <main>Loading...</main>;
+    return <main>Loading Deck...</main>;
   }
   return (
     <main>
-      <h1>Deck {deck.name}</h1>
+      <h1>{deck.name}</h1>
+      <p>{deck.description}</p>
       <Card deckId={deck._id} />
     </main>
   )
@@ -36,7 +40,7 @@ export default function App() {
   const { deck } = router.query;
 
   if (!deck) {
-    return <main>Loading...</main>;
+    return <main>Redirecting...</main>;
   }
   return <Review deckId={new Id("decks", deck as string)} />
 }
