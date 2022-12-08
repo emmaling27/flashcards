@@ -91,6 +91,9 @@ const Review = ({ deckId }: { deckId: Id<'decks'> }) => {
     </main>
   )
 }
+const DeckEditor = ({ deckId }: { deckId: Id<'decks'> }) => {
+  return <div></div>
+}
 
 export default function App() {
   const router = useRouter()
