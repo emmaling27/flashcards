@@ -13,7 +13,9 @@ const COLORS = [
 export const AddCard = ({ deckId }: { deckId: Id<'decks'> }) => {
   const addCard = useMutation('addCard')
 
-  const [colorIndex] = useState(Math.floor(Math.random() * COLORS.length))
+  const [colorIndex, setColorIndex] = useState(
+    Math.floor(Math.random() * COLORS.length)
+  )
   const color = COLORS[colorIndex]
 
   const [newCardFront, setNewCardFront] = useState('')
@@ -24,25 +26,37 @@ export const AddCard = ({ deckId }: { deckId: Id<'decks'> }) => {
     await addCard(deckId, newCardFront, newCardBack, color)
     setNewCardFront('')
     setNewCardBack('')
+    setColorIndex(Math.floor(Math.random() * COLORS.length))
   }
 
   return (
-    <form onSubmit={handleAddCard}>
-      <input
-        value={newCardFront}
-        onChange={(event) => setNewCardFront(event.target.value)}
-        placeholder="Front"
-      />
-      <input
-        value={newCardBack}
-        onChange={(event) => setNewCardBack(event.target.value)}
-        placeholder="Back"
-      />
-      <input
-        type="submit"
-        value="Add card"
-        disabled={!newCardFront || !newCardBack}
-      />
-    </form>
+    <>
+      <div className="card-editor">
+        <div className="minicard" style={{ backgroundColor: color }}>
+          {newCardFront}
+        </div>
+        <div className="minicard" style={{ backgroundColor: color }}>
+          {newCardBack}
+        </div>
+      </div>
+
+      <form onSubmit={handleAddCard}>
+        <input
+          value={newCardFront}
+          onChange={(event) => setNewCardFront(event.target.value)}
+          placeholder="Front"
+        />
+        <input
+          value={newCardBack}
+          onChange={(event) => setNewCardBack(event.target.value)}
+          placeholder="Back"
+        />
+        <input
+          type="submit"
+          value="Add card"
+          disabled={!newCardFront || !newCardBack}
+        />
+      </form>
+    </>
   )
 }
