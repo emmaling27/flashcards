@@ -99,5 +99,8 @@ export default function App() {
   if (!deck) {
     return <main>Redirecting...</main>
   }
-  return <Review deckId={new Id('decks', deck as string)} />
+  return (<div>
+    <button style={{position: "absolute", top: 10, left: 10}} onClick={() => router.back()}>Decks</button>
+    <Review deckId={new Id('decks', deck as string)} />
+  </div>);
 }
