@@ -16,7 +16,7 @@ const nextCardId = async (db: DatabaseReader, user: Document<'users'>, deckId: I
     if (cardDue === null) {
       return cardId;
     }
-    if (minDue === null || cardDue.due < minDue) {
+    if ((minDue === null || cardDue.due < minDue) && cardDue.due < Date.now()) {
       minDue = cardDue.due;
       minDueCard = cardId;
     }
