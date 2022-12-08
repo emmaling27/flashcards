@@ -18,44 +18,42 @@ export default function App() {
     createUser().catch(console.error)
     return () => setUserId(null)
   }, [storeUser])
-  const messages = useQuery('listMessages') || []
+  const decks = useQuery('listDecks') || []
 
-  const [newMessageText, setNewMessageText] = useState('')
-  const sendMessage = useMutation('sendMessage')
+  const [newDeckName, setNewDeckName] = useState('')
+  const [newDeckDescription, setNewDeckDescription] = useState('')
+  const addDeck = useMutation('addDeck')
 
-  const [name, setName] = useState('user')
-
-  useEffect(() => {
-    setName('User ' + Math.floor(Math.random() * 10000))
-  }, [])
-
-  async function handleSendMessage(event: FormEvent) {
+  async function handleAddDeck(event: FormEvent) {
     event.preventDefault()
-    setNewMessageText('')
-    await sendMessage(newMessageText, name)
+    setNewDeckName('')
+    setNewDeckDescription('')
+    await addDeck(newDeckName, newDeckDescription)
   }
   return (
     <main>
       <h1>Flashcards</h1>
-      <p className="badge">
-        <span>{name}</span>
-      </p>
       <ul>
-        {messages.map((message) => (
-          <li key={message._id.toString()}>
-            <span>{message.author}:</span>
-            <span>{message.body}</span>
-            <span>{new Date(message._creationTime).toLocaleTimeString()}</span>
+        {decks.map((deck) => (
+          <li key={deck._id.toString()}>
+            <span>{deck.name}</span>
+            <span>{deck.description}</span>
+            <span>{new Date(deck._creationTime).toLocaleTimeString()}</span>
           </li>
         ))}
       </ul>
-      <form onSubmit={handleSendMessage}>
+      <form onSubmit={handleAddDeck}>
         <input
-          value={newMessageText}
-          onChange={(event) => setNewMessageText(event.target.value)}
-          placeholder="Write a message…"
+          value={newDeckName}
+          onChange={(event) => setNewDeckName(event.target.value)}
+          placeholder="Name"
         />
-        <input type="submit" value="Send" disabled={!newMessageText} />
+        <input
+          value={newDeckDescription}
+          onChange={(event) => setNewDeckDescription(event.target.value)}
+          placeholder="Description"
+        />
+        <input type="submit" value="Add deck" disabled={!newDeckName} />
       </form>
     </main>
   )
