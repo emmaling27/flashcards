@@ -1,58 +1,60 @@
 import { FormEvent, useEffect, useState } from 'react'
-import { Id } from '../convex/_generated/dataModel';
+import { Id } from '../convex/_generated/dataModel'
 import { useMutation, useQuery } from '../convex/_generated/react'
 import { useRouter } from 'next/router'
+import FlashCard from '../components/FlashCard'
 
-
-const Card = ({deckId}: {deckId: Id<"decks">}) => {
-  const card = useQuery('showNextCard', deckId);
+const Card = ({ deckId }: { deckId: Id<'decks'> }) => {
+  const card = useQuery('showNextCard', deckId)
 
   if (card === undefined) {
-    return <div className={"card"}>Loading card...</div>;
+    return <FlashCard text={'Loading card...'} />
   }
   if (!card) {
-    return <div className={"card"}>No cards</div>;
+    return <div>'No cards'</div>
   }
-  return (
-    <div className={"card"}>
-      {card.front}
-    </div>
-  );
+  return <FlashCard text={card.front} />
 }
 
-const AddCard = ({deckId}: {deckId: Id<"decks">}) => {
-  const addCard = useMutation('addCard');
+const AddCard = ({ deckId }: { deckId: Id<'decks'> }) => {
+  const addCard = useMutation('addCard')
 
-  const [newCardFront, setNewCardFront] = useState('');
-  const [newCardBack, setNewCardBack] = useState('');
+  const [newCardFront, setNewCardFront] = useState('')
+  const [newCardBack, setNewCardBack] = useState('')
 
   const handleAddCard = async (e: FormEvent) => {
-    e.preventDefault();
-    await addCard(deckId, newCardFront, newCardBack);
-    setNewCardFront('');
-    setNewCardBack('');
-  };
+    e.preventDefault()
+    await addCard(deckId, newCardFront, newCardBack)
+    setNewCardFront('')
+    setNewCardBack('')
+  }
 
-  return (<form onSubmit={handleAddCard}>
-        <input
-          value={newCardFront}
-          onChange={(event) => setNewCardFront(event.target.value)}
-          placeholder="Front"
-        />
-        <input
-          value={newCardBack}
-          onChange={(event) => setNewCardBack(event.target.value)}
-          placeholder="Back"
-        />
-        <input type="submit" value="Add card" disabled={!newCardFront || !newCardBack} />
-      </form>);
-};
+  return (
+    <form onSubmit={handleAddCard}>
+      <input
+        value={newCardFront}
+        onChange={(event) => setNewCardFront(event.target.value)}
+        placeholder="Front"
+      />
+      <input
+        value={newCardBack}
+        onChange={(event) => setNewCardBack(event.target.value)}
+        placeholder="Back"
+      />
+      <input
+        type="submit"
+        value="Add card"
+        disabled={!newCardFront || !newCardBack}
+      />
+    </form>
+  )
+}
 
-const Review = ({deckId}: {deckId: Id<'decks'>}) => {
-  const deck = useQuery('getDeck', deckId);
+const Review = ({ deckId }: { deckId: Id<'decks'> }) => {
+  const deck = useQuery('getDeck', deckId)
 
   if (!deck) {
-    return <main>Loading Deck...</main>;
+    return <main>Loading Deck...</main>
   }
   return (
     <main>
@@ -65,11 +67,11 @@ const Review = ({deckId}: {deckId: Id<'decks'>}) => {
 }
 
 export default function App() {
-  const router = useRouter();
-  const { deck } = router.query;
+  const router = useRouter()
+  const { deck } = router.query
 
   if (!deck) {
-    return <main>Redirecting...</main>;
+    return <main>Redirecting...</main>
   }
-  return <Review deckId={new Id("decks", deck as string)} />
+  return <Review deckId={new Id('decks', deck as string)} />
 }
