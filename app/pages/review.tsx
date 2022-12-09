@@ -5,7 +5,9 @@ import { useRouter } from 'next/router'
 import FlashCard from '../components/FlashCard'
 import { Button, Popover } from '@mui/material'
 import { AddCard } from '../components/AddCard'
-
+import IconButton from '@mui/material/IconButton'
+import EditIcon from '@mui/icons-material/Edit'
+import CheckIcon from '@mui/icons-material/Check'
 const AddToDeck = ({
   card,
   close,
@@ -77,6 +79,7 @@ const Card = ({ deckId }: { deckId: Id<'decks'> }) => {
 const Review = ({ deckId }: { deckId: Id<'decks'> }) => {
   const deck = useQuery('getDeck', deckId)
   const deckStats = useQuery('deckStats', deckId) || null
+  const [editMode, setEditMode] = useState(false)
 
   if (!deck) {
     return <main>Loading Deck...</main>
@@ -84,14 +87,29 @@ const Review = ({ deckId }: { deckId: Id<'decks'> }) => {
   return (
     <main>
       <h1>{deck.name}</h1>
+      <IconButton
+        color="primary"
+        aria-label="edit deck"
+        component="label"
+        onClick={() => setEditMode(!editMode)}
+      >
+        {editMode ? <CheckIcon /> : <EditIcon />}
+      </IconButton>
       <p>{deck.description}</p>
       {deckStats && <p>{deckStats.numCards} cards in deck</p>}
-      <AddCard deckId={deckId} />
-      <Card deckId={deck._id} />
+      {editMode ? (
+        <DeckEditor deckId={deckId} />
+      ) : (
+        <div>
+          <AddCard deckId={deckId} />
+          <Card deckId={deck._id} />
+        </div>
+      )}
     </main>
   )
 }
 const DeckEditor = ({ deckId }: { deckId: Id<'decks'> }) => {
+  const cards = useQuery('listCards', deckId)
   return <div></div>
 }
 
@@ -102,8 +120,16 @@ export default function App() {
   if (!deck) {
     return <main>Redirecting...</main>
   }
-  return (<div>
-    <button style={{position: "absolute", top: 10, left: 10}} onClick={() => router.back()}>Decks</button>
-    <Review deckId={new Id('decks', deck as string)} />
-  </div>);
+  return (
+    <div>
+      <button
+        style={{ position: 'absolute', top: 10, left: 10 }}
+        onClick={() => router.back()}
+      >
+        Decks
+      </button>
+
+      <Review deckId={new Id('decks', deck as string)} />
+    </div>
+  )
 }
