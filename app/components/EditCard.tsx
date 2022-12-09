@@ -52,7 +52,7 @@ export const EditCard = ({
           style={{ backgroundColor: card.color }}
           contentEditable
           ref={backRef}
-          onChange={async () => {
+          onKeyUp={async () => {
             card.back = backRef.current!.innerText
             await editCard(card)
           }}
