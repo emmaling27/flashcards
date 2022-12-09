@@ -8,6 +8,7 @@ import { AddCard } from '../components/AddCard'
 import IconButton from '@mui/material/IconButton'
 import EditIcon from '@mui/icons-material/Edit'
 import CheckIcon from '@mui/icons-material/Check'
+import { EditCard } from '../components/EditCard'
 const AddToDeck = ({
   card,
   close,
@@ -101,7 +102,6 @@ const Review = ({ deckId }: { deckId: Id<'decks'> }) => {
         <DeckEditor deckId={deckId} />
       ) : (
         <div>
-          <AddCard deckId={deckId} />
           <Card deckId={deck._id} />
         </div>
       )}
@@ -110,7 +110,15 @@ const Review = ({ deckId }: { deckId: Id<'decks'> }) => {
 }
 const DeckEditor = ({ deckId }: { deckId: Id<'decks'> }) => {
   const cards = useQuery('listCards', deckId)
-  return <div></div>
+  return (
+    <div>
+      {' '}
+      <AddCard deckId={deckId} />
+      {cards?.map((card) => (
+        <EditCard deckId={deckId} card={card} />
+      ))}
+    </div>
+  )
 }
 
 export default function App() {
