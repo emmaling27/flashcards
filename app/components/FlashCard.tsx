@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Document } from '../convex/_generated/dataModel'
-import Image from 'next/image'
 import { useMutation } from '../convex/_generated/react'
 export default function ({ card }: { card: Document<'cards'> }) {
   const [front, setFront] = useState(true)

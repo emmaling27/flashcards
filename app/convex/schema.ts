@@ -13,6 +13,7 @@ export default defineSchema({
     name: s.string(),
     description: s.string(),
     creator: s.id('users'),
+    color: s.string(),
   }),
   cards: defineTable({
     front: s.string(),

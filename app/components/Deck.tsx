@@ -7,7 +7,11 @@ export default function Deck(props: { deck: Document<'decks'> }) {
     router.push(`/review?deck=${props.deck._id.toString()}`)
   }
   return (
-    <div onClick={handleClickDeck} className="deck">
+    <div
+      onClick={handleClickDeck}
+      className="deck"
+      style={{ backgroundColor: props.deck.color }}
+    >
       <strong>{props.deck.name}</strong>
       {props.deck.description}
     </div>
