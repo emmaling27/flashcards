@@ -1,11 +1,19 @@
 import { DatabaseReader, query } from './_generated/server'
 import { Document, Id } from './_generated/dataModel'
 import { getUser } from './addDeck';
+import { GenericId } from 'convex/dist/types/values/values';
+
+export async function cardsInDeck(db: DatabaseReader, deckId: Id<'decks'>): Promise<GenericId<'cards'>[]> {
+  let cards = await db.query('card_decks')
+  .withIndex('by_deck', q => q.eq("deck", deckId)).collect();
+  if (!cards) {
+    cards = []
+  }
+  return cards.map(card_deck => card_deck.card);
+}
 
 const nextCardId = async (db: DatabaseReader, user: Document<'users'>, deckId: Id<'decks'>) => {
-  const allCards = (await db.query('card_decks')
-    .withIndex('by_deck', q => q.eq("deck", deckId)).collect())
-    .map(card_deck => card_deck.card);
+  const allCards = await cardsInDeck(db, deckId);
   // LEFT OUTER JOIN cards_due
   let minDue = null;
   let minDueCard = null;
