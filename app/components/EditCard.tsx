@@ -10,8 +10,6 @@ export const EditCard = ({
   deckId: Id<'decks'>
   card: Document<'cards'>
 }) => {
-  const addCard = useMutation('addCard')
-
   const frontRef = useRef<HTMLDivElement>(null)
   const backRef = useRef<HTMLDivElement>(null)
 
@@ -31,6 +29,7 @@ export const EditCard = ({
       }
     }
   )
+  let typingTimer: any
 
   return (
     <div className="add-card">
@@ -54,7 +53,11 @@ export const EditCard = ({
           ref={backRef}
           onKeyUp={async () => {
             card.back = backRef.current!.innerText
-            await editCard(card)
+            clearTimeout(typingTimer)
+
+            typingTimer = setTimeout(async () => {
+              await editCard(card)
+            }, 1000)
           }}
         >
           {card.back}
