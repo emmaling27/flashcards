@@ -22,6 +22,7 @@ import type * as reviewCard from "../reviewCard";
 import type * as sendMessage from "../sendMessage";
 import type * as showNextCard from "../showNextCard";
 import type * as storeUser from "../storeUser";
+import type * as updateCard from "../updateCard";
 
 /**
  * A type describing your app's public Convex API.
@@ -45,4 +46,5 @@ export type API = ApiFromModules<{
   sendMessage: typeof sendMessage;
   showNextCard: typeof showNextCard;
   storeUser: typeof storeUser;
+  updateCard: typeof updateCard;
 }>;
