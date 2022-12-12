@@ -15,7 +15,7 @@ export default function App() {
       <Tooltip title="Browse all decks">
         <Button
           variant="contained"
-          style={{ position: 'absolute', top: 10, left: 10 }}
+          style={{ position: 'relative', top: 10, left: 10 }}
           onClick={() => router.back()}
         >
           Decks

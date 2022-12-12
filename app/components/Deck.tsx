@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { Document, Id } from '../convex/_generated/dataModel'
+import { Document } from '../convex/_generated/dataModel'
 
 export default function Deck(props: { deck: Document<'decks'> }) {
   const router = useRouter()

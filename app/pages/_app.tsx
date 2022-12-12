@@ -7,23 +7,35 @@ import { ConvexProviderWithAuth0 } from 'convex/react-auth0'
 import clientConfig from '../convex/_generated/clientConfig'
 import { useAuth0 } from '@auth0/auth0-react'
 import { Button } from '@mui/material'
+import { useRouter } from 'next/router'
 const convex = new ConvexReactClient(clientConfig)
 const authInfo = convexConfig.authInfo[0]
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter()
   return (
-    <ConvexProviderWithAuth0
-      client={convex}
-      authInfo={authInfo}
-      loggedOut={<Login />}
-    >
-      <div className="text-center">
-        <span>
-          <Logout />
-        </span>
-      </div>
-      <Component {...pageProps} />
-    </ConvexProviderWithAuth0>
+    <div>
+      {' '}
+      <Button
+        className="faq-button"
+        variant="outlined"
+        onClick={() => router.push('/faq')}
+      >
+        faq
+      </Button>
+      <ConvexProviderWithAuth0
+        client={convex}
+        authInfo={authInfo}
+        loggedOut={<Login />}
+      >
+        <div className="text-center">
+          <span>
+            <Logout />
+          </span>
+        </div>
+        <Component {...pageProps} />
+      </ConvexProviderWithAuth0>
+    </div>
   )
 }
 
