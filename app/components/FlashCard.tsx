@@ -18,12 +18,7 @@ export default function ({ card }: { card: Document<'cards'> }) {
       </div>
       <div className="review-card">
         <Tooltip title="That was too easy.">
-          <button
-            onClick={() => reviewCard(card._id, 'Easy')}
-            title="Don't show this card again for a while"
-          >
-            🕰
-          </button>
+          <button onClick={() => reviewCard(card._id, 'Easy')}>🕰</button>
         </Tooltip>
         <Tooltip title="I got it right!">
           <button onClick={() => reviewCard(card._id, 'Good')}>👍</button>
