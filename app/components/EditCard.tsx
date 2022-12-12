@@ -2,6 +2,9 @@ import { useRef } from 'react'
 import { Id } from '../convex/_generated/dataModel'
 import { useMutation } from '../convex/_generated/react'
 import { Document } from '../convex/_generated/dataModel'
+import IconButton from '@mui/material/IconButton/IconButton'
+import { Delete } from '@mui/icons-material'
+import { Tooltip } from '@mui/material'
 
 export const EditCard = ({
   deckId,
@@ -29,6 +32,8 @@ export const EditCard = ({
       }
     }
   )
+
+  const removeCard = useMutation('removeCardFromDeck')
   let typingTimer: any
 
   return (
@@ -62,6 +67,16 @@ export const EditCard = ({
         >
           {card.back}
         </div>
+        <Tooltip title="Delete card" placement="right">
+          <IconButton
+            color="primary"
+            aria-label="edit deck"
+            component="label"
+            onClick={() => removeCard(card._id, deckId)}
+          >
+            <Delete />
+          </IconButton>
+        </Tooltip>
       </div>
     </div>
   )

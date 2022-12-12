@@ -18,6 +18,7 @@ import type * as getDeck from "../getDeck";
 import type * as listCards from "../listCards";
 import type * as listDecks from "../listDecks";
 import type * as listMessages from "../listMessages";
+import type * as removeCardFromDeck from "../removeCardFromDeck";
 import type * as reviewCard from "../reviewCard";
 import type * as sendMessage from "../sendMessage";
 import type * as showNextCard from "../showNextCard";
@@ -42,6 +43,7 @@ export type API = ApiFromModules<{
   listCards: typeof listCards;
   listDecks: typeof listDecks;
   listMessages: typeof listMessages;
+  removeCardFromDeck: typeof removeCardFromDeck;
   reviewCard: typeof reviewCard;
   sendMessage: typeof sendMessage;
   showNextCard: typeof showNextCard;
