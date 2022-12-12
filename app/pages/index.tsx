@@ -34,7 +34,6 @@ export default function App() {
     <main>
       <h1>Flashcard Decks</h1>
       <DeckPicker />
-
       <form onSubmit={handleAddDeck}>
         <input
           value={newDeckName}

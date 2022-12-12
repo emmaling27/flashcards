@@ -14,7 +14,7 @@ export const Card = ({ deckId }: { deckId: Id<'decks'> }) => {
     return <div>'Loading card...'</div>
   }
   if (!card) {
-    return <div>'No cards'</div>
+    return <div>No cards left to review right now! Come back later.</div>
   }
   return (
     <div>

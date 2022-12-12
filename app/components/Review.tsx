@@ -18,17 +18,19 @@ export const Review = ({ deckId }: { deckId: Id<'decks'> }) => {
   }
   return (
     <main>
-      <h1>{deck.name}</h1>
-      <Tooltip title={editMode ? 'Done editing' : 'Edit this deck'}>
-        <IconButton
-          color="primary"
-          aria-label="edit deck"
-          component="label"
-          onClick={() => setEditMode(!editMode)}
-        >
-          {editMode ? <CheckIcon /> : <EditIcon />}
-        </IconButton>
-      </Tooltip>
+      <h1>
+        {deck.name}{' '}
+        <Tooltip title={editMode ? 'Done editing' : 'Edit this deck'}>
+          <IconButton
+            color="primary"
+            aria-label="edit deck"
+            component="label"
+            onClick={() => setEditMode(!editMode)}
+          >
+            {editMode ? <CheckIcon /> : <EditIcon />}
+          </IconButton>
+        </Tooltip>
+      </h1>
       <p>{deck.description}</p>
       {deckStats && <p>{deckStats.numCards} cards in deck</p>}
       {editMode ? (
