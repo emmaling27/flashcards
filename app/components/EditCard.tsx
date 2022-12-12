@@ -70,7 +70,7 @@ export const EditCard = ({
         <Tooltip title="Delete card" placement="right">
           <IconButton
             color="primary"
-            aria-label="edit deck"
+            aria-label="delete card from deck"
             component="label"
             onClick={() => removeCard(card._id, deckId)}
           >

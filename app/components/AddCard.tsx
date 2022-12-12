@@ -1,3 +1,5 @@
+import { Add } from '@mui/icons-material'
+import { IconButton, Tooltip } from '@mui/material'
 import { FormEvent, useRef, useState } from 'react'
 import { Id } from '../convex/_generated/dataModel'
 import { useMutation } from '../convex/_generated/react'
@@ -39,8 +41,17 @@ export const AddCard = ({ deckId }: { deckId: Id<'decks'> }) => {
           contentEditable
           ref={backRef}
         />
+        <Tooltip title="Add card" placement="right">
+          <IconButton
+            color="primary"
+            aria-label="add card to deck"
+            component="label"
+            onClick={handleAddCard}
+          >
+            <Add />
+          </IconButton>
+        </Tooltip>
       </div>
-      <button onClick={handleAddCard}>Add card</button>
     </div>
   )
 }
