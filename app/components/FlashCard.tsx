@@ -1,3 +1,4 @@
+import { Tooltip } from '@mui/material'
 import { useState } from 'react'
 import { Document } from '../convex/_generated/dataModel'
 import { useMutation } from '../convex/_generated/react'
@@ -16,24 +17,20 @@ export default function ({ card }: { card: Document<'cards'> }) {
         </div>
       </div>
       <div className="review-card">
-        <button
-          onClick={() => reviewCard(card._id, 'Good')}
-          title="Mark card as correct"
-        >
-          👍
-        </button>
-        <button
-          onClick={() => reviewCard(card._id, 'Hard')}
-          title="Mark card as incorrect"
-        >
-          👎
-        </button>
-        <button
-          onClick={() => reviewCard(card._id, 'Easy')}
-          title="Don't show this card again for a while"
-        >
-          🕰
-        </button>
+        <Tooltip title="That was too easy.">
+          <button
+            onClick={() => reviewCard(card._id, 'Easy')}
+            title="Don't show this card again for a while"
+          >
+            🕰
+          </button>
+        </Tooltip>
+        <Tooltip title="I got it right!">
+          <button onClick={() => reviewCard(card._id, 'Good')}>👍</button>
+        </Tooltip>
+        <Tooltip title="I struggled with that one...">
+          <button onClick={() => reviewCard(card._id, 'Hard')}>👎</button>
+        </Tooltip>
       </div>
     </div>
   )
