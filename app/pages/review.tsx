@@ -1,6 +1,7 @@
 import { Id } from '../convex/_generated/dataModel'
 import { useRouter } from 'next/router'
 import { Review } from '../components/Review'
+import { Button, Tooltip } from '@mui/material'
 
 export default function App() {
   const router = useRouter()
@@ -11,13 +12,15 @@ export default function App() {
   }
   return (
     <div>
-      <button
-        style={{ position: 'absolute', top: 10, left: 10 }}
-        onClick={() => router.back()}
-      >
-        Decks
-      </button>
-
+      <Tooltip title="Browse all decks">
+        <Button
+          variant="contained"
+          style={{ position: 'absolute', top: 10, left: 10 }}
+          onClick={() => router.back()}
+        >
+          Decks
+        </Button>
+      </Tooltip>
       <Review deckId={new Id('decks', deck as string)} />
     </div>
   )

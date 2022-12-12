@@ -20,7 +20,7 @@ export const Card = ({ deckId }: { deckId: Id<'decks'> }) => {
     <div>
       <FlashCard card={card} />
       <Button
-        variant="contained"
+        variant="outlined"
         onClick={(e) => {
           setAnchorEl(e.currentTarget)
         }}
@@ -36,7 +36,11 @@ export const Card = ({ deckId }: { deckId: Id<'decks'> }) => {
           horizontal: 'left',
         }}
       >
-        <AddToDeck card={card} close={() => setAnchorEl(null)} />
+        <AddToDeck
+          card={card}
+          close={() => setAnchorEl(null)}
+          deckId={deckId}
+        />
       </Popover>
     </div>
   )

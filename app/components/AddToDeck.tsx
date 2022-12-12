@@ -4,9 +4,11 @@ import { Id, Document } from '../convex/_generated/dataModel'
 export const AddToDeck = ({
   card,
   close,
+  deckId,
 }: {
   card: Document<'cards'>
   close: () => void
+  deckId: Id<'decks'>
 }) => {
   const addCardToDeck = useMutation('addCardToDeck')
   const decks = useQuery('listDecks') || []
@@ -19,15 +21,17 @@ export const AddToDeck = ({
   return (
     <div>
       <ul>
-        {decks.map((deck) => (
-          <li
-            key={deck._id.toString()}
-            onClick={() => handleClickDeck(deck._id)}
-          >
-            <span>{deck.name}</span>
-            <span>{deck.description}</span>
-          </li>
-        ))}
+        {decks
+          .filter((d) => !d._id.equals(deckId))
+          .map((deck) => (
+            <li
+              key={deck._id.toString()}
+              onClick={() => handleClickDeck(deck._id)}
+            >
+              <span>{deck.name}: </span>
+              <span>{deck.description}</span>
+            </li>
+          ))}
       </ul>
     </div>
   )
