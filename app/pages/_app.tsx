@@ -51,7 +51,7 @@ function Logout() {
     <div>
       {/* We know this component only renders if the user is logged in. */}
       <button
-        style={{position: "absolute", top: 10, right: 10}}
+        style={{ position: 'absolute', top: 10, right: 10 }}
         className="btn btn-primary"
         onClick={() => logout({ returnTo: window.location.origin })}
       >

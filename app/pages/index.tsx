@@ -1,6 +1,6 @@
 import { FormEvent, useEffect, useState } from 'react'
 import { Id } from '../convex/_generated/dataModel'
-import { useMutation, useQuery } from '../convex/_generated/react'
+import { useMutation } from '../convex/_generated/react'
 import DeckPicker from '../components/DeckPicker'
 
 export default function App() {
