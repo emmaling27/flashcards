@@ -3,6 +3,9 @@ import { Id } from '../convex/_generated/dataModel'
 import { useMutation } from '../convex/_generated/react'
 import DeckPicker from '../components/DeckPicker'
 
+const MAX_DECK_NAME_LENGTH = 25
+const MAX_DECK_DESCRIPTION_LENGTH = 80
+
 export default function App() {
   const [_userId, setUserId] = useState<Id<'users'> | null>(null)
   const storeUser = useMutation('storeUser')
@@ -30,22 +33,46 @@ export default function App() {
     setNewDeckDescription('')
     await addDeck(newDeckName, newDeckDescription)
   }
+
+  const validDeckName = () => newDeckName.length <= MAX_DECK_NAME_LENGTH
+  const validDeckDescription = () =>
+    newDeckDescription.length <= MAX_DECK_DESCRIPTION_LENGTH
+
   return (
     <main>
       <h1>Flashcard Decks</h1>
       <DeckPicker />
       <form onSubmit={handleAddDeck}>
+        <div className="input">
+          <input
+            value={newDeckName}
+            onChange={(event) => setNewDeckName(event.target.value)}
+            placeholder="Name"
+          />{' '}
+          {!validDeckName() && (
+            <p className="input-error">
+              Deck name must be no more than {MAX_DECK_NAME_LENGTH} characters.
+            </p>
+          )}
+        </div>
+        <div className="input">
+          <input
+            value={newDeckDescription}
+            onChange={(event) => setNewDeckDescription(event.target.value)}
+            placeholder="Description"
+          />
+          {!validDeckDescription() && (
+            <p className="input-error">
+              Deck description must be no more than{' '}
+              {MAX_DECK_DESCRIPTION_LENGTH} characters.
+            </p>
+          )}
+        </div>
         <input
-          value={newDeckName}
-          onChange={(event) => setNewDeckName(event.target.value)}
-          placeholder="Name"
+          type="submit"
+          value="Add deck"
+          disabled={!newDeckName || !validDeckName() || !validDeckDescription()}
         />
-        <input
-          value={newDeckDescription}
-          onChange={(event) => setNewDeckDescription(event.target.value)}
-          placeholder="Description"
-        />
-        <input type="submit" value="Add deck" disabled={!newDeckName} />
       </form>
     </main>
   )

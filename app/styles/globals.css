@@ -29,6 +29,15 @@ main {
   margin: 10px;
 }
 
+.input {
+  display: block;
+}
+
+.input-error {
+  color: red;
+  font-size: x-small;
+}
+
 .deck-picker {
   display: flex;
   align-items: center;
