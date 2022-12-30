@@ -18,9 +18,12 @@ export const Review = ({ deckId }: { deckId: Id<'decks'> }) => {
   }
   return (
     <main>
-      <h1>
+      <h1 className="deck-title">
         {deck.name}{' '}
-        <Tooltip title={editMode ? 'Done editing' : 'Edit this deck'}>
+        <Tooltip
+          className="edit-deck"
+          title={editMode ? 'Done editing' : 'Edit this deck'}
+        >
           <IconButton
             color="primary"
             aria-label="edit deck"
@@ -31,7 +34,7 @@ export const Review = ({ deckId }: { deckId: Id<'decks'> }) => {
           </IconButton>
         </Tooltip>
       </h1>
-      <p>{deck.description}</p>
+      <p className="deck-description">{deck.description}</p>
       {deckStats && <p>{deckStats.numCards} cards in deck</p>}
       {editMode ? (
         <DeckEditor deckId={deckId} />

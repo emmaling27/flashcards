@@ -47,6 +47,14 @@ main {
   flex-direction: column;
 }
 
+.edit-deck {
+  position: absolute;
+}
+
+.deck-description {
+  text-align: center;
+}
+
 .minicard {
   border: 1px solid black;
   width: 400px;
