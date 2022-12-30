@@ -33,8 +33,9 @@ export const Card = ({ deckId }: { deckId: Id<'decks'> }) => {
         onClose={() => setAnchorEl(null)}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'left',
+          horizontal: 'right',
         }}
+        marginThreshold={100}
       >
         <AddToDeck
           card={card}
