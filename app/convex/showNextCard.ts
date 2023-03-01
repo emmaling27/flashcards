@@ -1,7 +1,7 @@
 import { DatabaseReader, query } from './_generated/server'
 import { Document, Id } from './_generated/dataModel'
 import { getUser } from './addDeck';
-import { GenericId } from 'convex/dist/types/values/values';
+import { GenericId } from 'convex/values';
 
 export async function cardsInDeck(db: DatabaseReader, deckId: Id<'decks'>): Promise<GenericId<'cards'>[]> {
   let cards = await db.query('card_decks')

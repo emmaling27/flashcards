@@ -1,6 +1,5 @@
-import { Auth } from 'convex/dist/types/server/server'
 import { Id } from './_generated/dataModel'
-import { DatabaseReader, mutation } from './_generated/server'
+import {  mutation } from './_generated/server'
 import { getUser } from './addDeck'
 
 export default mutation(

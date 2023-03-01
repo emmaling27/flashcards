@@ -1,6 +1,6 @@
-import { Auth } from 'convex/dist/types/server/server'
 import { DatabaseReader, mutation } from './_generated/server'
 import { randomColor } from '../shared/colors'
+import { Auth } from 'convex/server'
 export const getUser = async (db: DatabaseReader, auth: Auth) => {
   const identity = await auth.getUserIdentity()
   if (!identity) {

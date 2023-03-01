@@ -4,11 +4,11 @@ import convexConfig from '../convex.json'
 
 import { ConvexReactClient } from 'convex/react'
 import { ConvexProviderWithAuth0 } from 'convex/react-auth0'
-import clientConfig from '../convex/_generated/clientConfig'
 import { useAuth0 } from '@auth0/auth0-react'
 import { Button } from '@mui/material'
 import { useRouter } from 'next/router'
-const convex = new ConvexReactClient(clientConfig)
+const address = process.env.NEXT_PUBLIC_CONVEX_URL
+const convex = new ConvexReactClient(address)
 const authInfo = convexConfig.authInfo[0]
 
 function MyApp({ Component, pageProps }: AppProps) {
